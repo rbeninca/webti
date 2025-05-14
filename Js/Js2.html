@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        li{
+            width: 50px;
+            height: 50px;
+            flex-grow: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    
+    <script>
+        let i = 0
+   //   let a = Number(prompt("Digite um numero: "))
+        a=100;
+        for(i = 0; i <= a;i++){
+            console.log(i)
+        }
+    
+        let listaOrd = document.createElement("ul")
+        document.body.appendChild(listaOrd);
+        listaOrd.style.display="flex"
+        listaOrd.style.flexWrap="wrap";
+        for(i = 0; i <= a; i++){
+            lista = document.createElement("li")
+            lista.innerHTML = i 
+
+            listaOrd.appendChild(lista);
+            
+            if(i%2 ==0){
+                lista.style.backgroundColor = "red"
+            }
+        }
+
+       
+
+    </script>
+</body>
+</html>

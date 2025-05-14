@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100svh;
+        }
+    </style>
+</head>
+<body> 
+    <button>click</button>
+    <script>
+        /* crie uma aplicação que sorteie a cor cada vez que o usuário clicar sobre o bottão 
+        
+        Mude a cor de fundo para cor sorteada. 
+
+        */
+        document.querySelector("button").addEventListener("click",sorteiaCorFundo)
+        
+        function sorteiaCorFundo(){
+                cor="rgb("+sorteiaNumero()+","+sorteiaNumero()+","+sorteiaNumero()+")";
+                console.log(cor);
+                document.body.style.backgroundColor=cor;
+        }
+        function sorteiaNumero(){
+            return Math.trunc(Math.random()*255);
+        }
+
+
+    </script>
+    
+</body>
+</html>
