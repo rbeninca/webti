@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="Usuario_listar.php">
+    <form action="Usuario_listar.php" method="GET">
         <label for="inputnome">Nome</label>
         <input type="text" id="inputnome" name="nome">
 
