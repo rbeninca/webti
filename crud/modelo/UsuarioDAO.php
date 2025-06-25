@@ -35,13 +35,13 @@ class UsuarioDAO {
         }
         return $usuarios;
 
-
-    public function autenticar($email,$senha){
-
-
-        
     }
-
+    public function autenticar($email,$senha){
+        $usr=$this->busca_usr_email($email);
+        if (isset($usr) &&  $usr->senha==$senha) {
+            return $usr;
+        }
+        return null;
     }
 
 
