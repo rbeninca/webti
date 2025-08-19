@@ -19,14 +19,15 @@
             background-color: #f0f0f0;
             font-size: 12pt;
         }
-        table,tr,td{
-            border-collapse: collapse;
-            border: 1px solid #000;
+        table,td,th{
+            /** border-collapse: collapse; **/
+            border: 5px solid #000;
         }
     </style>
 </head>
 
 <body>
+    <!-- isso é um comentário em html -->
     <h1>Titulo de nível 1</h1>
     <h2>Titulo de nível 2</h2>
     <h3>Titulo de nível 3</h3>
@@ -69,7 +70,7 @@
         </ol>
         </span>
         <span>
-            <ol type="A" start="4"> 
+            <ol type="I" start="5"> 
                 <li>Item 1</li>
                 <li>Item 2</li>
                 <li>Item 3</li>
@@ -99,10 +100,10 @@
         <h2>Tabelas no HTML</h2>
         <table>
             <tr>
-                <td>Item</td>
-                <td>Descrição</td>
-                <td>Quantidade</td>
-                <td>Preço</td>
+                <th>Item</th>
+                <th>Descrição</th>
+                <th>Quantidade</th>
+                <th>Preço</th>
             </tr>
             <tr>
                 <td>1</td>
@@ -137,6 +138,45 @@
         </table>
     </div>
     
+
+    <div>
+        <h2>Formularios</h2>
+        <P>bla bla bla bla bla</P>
+        <form action="">
+            <label for="nomeusuario">Nome</label>
+            <input id="nomeusuario" type="text"     placeholder="Entre com nome">
+            <br>
+            <label for="cor">cor Cachaça</label>
+            <input id="cor" type="color">
+            <br>
+            <label for="datanacimeto">Nascimento</label>
+            <input type="date" id="datanacimeto">
+            <br>
+            <label for="email">E-mail</label>
+            <input type="email" id="email">
+            <br>
+            <label for="endereco">Endereço</label>
+            <input id="endereco" type="text">
+            <br>
+
+            <label for="obs">observação</label>
+            <textarea id="obs" type="text"> </textarea>
+        <br>
+        
+        <input type="button" value="Enviar">
+        </form>
+
+
+        <form action="https://www.google.com/search" method="POST">
+            <h2>busca</h2>
+            <label for="key">Entre com termo</label>
+            <input type="text" id="key"name="q">
+            <input type="text" name="bla">
+            <button>Enviar</button>
+            <input type="submit" value="Enviar">
+        </form>
+
+    </div>
 
 </body>
 
