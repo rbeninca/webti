@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O que é JavaScript?</title>
+</head>
+<body>
+    <h1>O que é JavaScript?</h1>
+    <p>É uma linguagem de programação, interpretada, para desenvolvimento web que é executada no navegador do cliente em um sandbox, que limita o acesso aos recursos do sistema operacional, fornecendo interfaces predefinidas, a forma de acesso a recursos do sistema se faz por meio de objetos globais disponibilizados ao navegador, como: document, history, local storage e console. Ela foi criada para adicionar dinamismo e interatividade nas páginas.A tipagem é dinâmica e forte, permitindo que variáveis possam ser atribuídas e reatribuídas a qualquer momento, sem a necessidade de declarar seu tipo previamente.Os tipos de dados nativos da linguagem são: Number, String, Boolean, Object, Array e Function.
+
+    </p>
+    <p id="clock">
+        <span id="hora"></span>
+        <span id="minuto"></span>
+        <span id="segundo"></span>
+        <span id="ms">
+        </span>
+        <button onclick="continuar()" id="comecar">COMEÇAR</button>
+    </p>
+    <script>
+        console.log("Olá, mundo!");
+       // alert("Olá, mundo!");
+        document.getElementById("hora").innerHTML = "Hora atual: " + new Date().toLocaleTimeString();
+        let i;
+        function continuar(){
+        
+            if(i==null){
+               i=setInterval(() => {
+                let hora=new Date();
+                document.getElementById("hora").innerHTML = hora.getHours();
+                document.getElementById("minuto").innerHTML = ":" + hora.getMinutes();
+                document.getElementById("segundo").innerHTML = ":" + hora.getSeconds();
+                document.getElementById("ms").innerHTML = ":" + hora.getMilliseconds();
+
+            }, 1);
+            comecar.innerHTML="PARAR";
+            }
+            else{
+                
+                clearInterval(i);
+                i=null;
+                comecar.innerHTML="CONTINUAR";
+            }
+      
+
+            console.log(i);
+        }
+        
+    </script>
+</body>
+</html>
