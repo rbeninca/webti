@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+        <button id="btn">click em mim</button>    
+</body>
+<script>
+    var i =0;
+    //let btn=document.getElementById("btn");
+    let btn=document.querySelector("#btn");
+    btn.addEventListener("click",(e)=>{
+        console.log(e);
+        btn.innerHTML=i;
+        i++;
+    });
+
+    //capturando evento do teclado
+    document.body.addEventListener("keydown",(evento)=>{
+        console.log(evento)
+        console.log("tecla pressionada "+evento.key);
+    });
+
+
+</script>
+</html>
+
+</html>
