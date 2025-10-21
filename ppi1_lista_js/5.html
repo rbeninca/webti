@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorteio</title>
+    <style>
+        .inputdata {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .inputdata>input {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Informe o intervalo de valores para o sorteio</h1>
+    <div class="inputdata">
+        <label for="minimo">Valor Minimo</label>
+        <input id="minimo" type="number">
+
+        <label for="maximo">Valor Maxímo</label>
+        <input id="maximo" type="number">
+        <button id="sortear" onclick="sortear()">Sortear</button>
+
+        <p id="resultado"></p>
+
+    </div>
+    <h1>Lista de valores já sorteados</h1>
+    <p id="displayHistorico">Já foram sorteados: </p>
+
+    <script>
+        const historico = []
+
+        function sortear() {
+            let min = parseInt(document.getElementById(("minimo").value));
+            let max = parseInt(document.getElementById(("maximo").value));
+            let resultado = document.getElementById("resultado");
+            let sortear = document.getElementById("sortear");
+
+            let displayHistorico = document.getElementById("displayHistorico");
+
+                let numero = Math.floor(Math.random() * (max - min + 1)) + min
+                resultado.innerText = "Numero sorteado: " + numero
+                log(numero)
+                let jahFoiSorteado = false;
+                historico.forEach(elemento => {
+                    if (elemento.numero == numero) {
+                        jahFoiSorteado = true;
+                        alert("O número " + numero + " foi sorteado " + elemento.vezes);
+                        elemento.vezes++;
+                    }
+                })
+                if (jahFoiSorteado == false) {
+                    historico.push(
+                        {
+                            "numero": numero,
+                            "vezes": 0
+                        }
+                    )
+                    displayHistorico.textContent += numero + ", "
+                }
+      
+
+        }
+
+
+
+    </script>
+
+
+</body>
+
+</html>

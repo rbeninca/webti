@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sorteio de Alunos</title>
+    <title>Sorteio</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +14,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            
             min-height: 100vh;
             padding: 20px;
             display: flex;
@@ -31,7 +32,7 @@
             color: white;
             font-size: 2.5em;
             margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .stats {
@@ -46,12 +47,18 @@
             background: white;
             border-radius: 20px;
             padding: 40px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             margin-bottom: 30px;
         }
 
+        .buttons-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
         #btn {
-            width: 100%;
+            flex: 1;
             padding: 20px;
             font-size: 1.5em;
             font-weight: bold;
@@ -61,7 +68,6 @@
             border-radius: 15px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(245, 87, 108, 0.4);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -79,6 +85,24 @@
             background: #ccc;
             cursor: not-allowed;
             box-shadow: none;
+        }
+
+        #resetBtn {
+            padding: 20px 30px;
+            font-size: 1em;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(135deg, #ff6b6b 0%, #c92a2a 100%);
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        #resetBtn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(201, 42, 42, 0.6);
         }
 
         .resultado {
@@ -100,7 +124,7 @@
             border-radius: 50%;
             object-fit: cover;
             border: 5px solid #f5576c;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             animation: zoomIn 0.5s ease;
         }
 
@@ -109,6 +133,7 @@
                 transform: scale(0);
                 opacity: 0;
             }
+
             to {
                 transform: scale(1);
                 opacity: 1;
@@ -127,6 +152,7 @@
                 transform: translateY(20px);
                 opacity: 0;
             }
+
             to {
                 transform: translateY(0);
                 opacity: 1;
@@ -153,7 +179,7 @@
             background: white;
             border-radius: 20px;
             padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
         .historico h3 {
@@ -226,13 +252,12 @@
             }
         }
 
-        .confetti {
+        .aconfetti {
             position: fixed;
-            width: 10px;
-            height: 10px;
+            width: 20px;
+            height: 20px;
             background: #f5576c;
-            position: absolute;
-            animation: fall 3s linear;
+            animation: fall 3s linear forwards;
         }
 
         @keyframes fall {
@@ -241,36 +266,54 @@
                 opacity: 0;
             }
         }
+
+        .saved-indicator {
+            text-align: center;
+            color: white;
+            font-size: 0.9em;
+            margin-top: 10px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .saved-indicator.show {
+            opacity: 1;
+        }
     </style>
 </head>
+
 <body>
     <div class="container">
-        <h1>🎲 Sorteio de Alunos 🎲</h1>
+        <h1>Sorteio de Alunos</h1>
         <div class="stats">
             <span id="stats">Carregando...</span>
         </div>
 
         <div class="sorteio-area">
-            <button id="btn">🎯 Sortear Aluno</button>
-            <div class="loading" id="loading">🔄 Sorteando...</div>
+            <div class="buttons-group">
+                <button id="btn">Sortear Aluno</button>
+                <button id="resetBtn">Resetar Sorteio</button>
+            </div>
+            <div class="saved-indicator" id="savedIndicator">✓ Dados salvos automaticamente</div>
+            <div class="loading" id="loading">Sorteando...</div>
             <div id="resultado"></div>
         </div>
 
         <div class="historico">
-            <h3>📋 Histórico de Sorteios</h3>
+            <h3> Histórico de Sorteios</h3>
             <div class="historico-lista" id="historico"></div>
         </div>
     </div>
 
     <script>
         const baseUrlimg = "./fotinhos/";
-        const alunos = [
+        const alunosOriginais = [
             { matricula: "202221202818", nome: "ALVARO GABRIEL GOULART RODRIGUES", faltas: 0, foto: "./fotinhos/202221202818" },
             { matricula: "202311101454", nome: "ANA JULIA BERGAMO", faltas: 0, foto: "./fotinhos/202311101454" },
             { matricula: "202311100263", nome: "ARTHUR PEREIRA", faltas: 0, foto: "./fotinhos/202311100263" },
             { matricula: "202211400292", nome: "BENJAMIM SCHMITT BARRETO", faltas: 0, foto: "./fotinhos/202211400292" },
-            { matricula: "202311101373", nome: "BIANCA JUNKES RECH", faltas: 2, foto: "./fotinhos/202311101373" },
-            { matricula: "202311100301", nome: "CAMILA DE ASSUNCAO", faltas: 2, foto: "./fotinhos/202311100301" },
+            { matricula: "202311101373", nome: "BIANCA JUNKES RECH", faltas: 0, foto: "./fotinhos/202311101373" },
+            { matricula: "202311100301", nome: "CAMILA DE ASSUNCAO", faltas: 0, foto: "./fotinhos/202311100301" },
             { matricula: "202311100928", nome: "CLARA BIANCA KISTNER", faltas: 0, foto: "./fotinhos/202311100928" },
             { matricula: "202311100314", nome: "DANIEL STAMM PESSOA DE OLIVEIRA", faltas: 0, foto: "./fotinhos/202311100314" },
             { matricula: "202121500262", nome: "DIMITRI SCHMIDT", faltas: 0, foto: "./fotinhos/202121500262" },
@@ -280,47 +323,104 @@
             { matricula: "202311100240", nome: "GABRIEL MENDES MOTTA", faltas: 0, foto: "./fotinhos/202311100240" },
             { matricula: "202311104312", nome: "GUSTAVO DANIEL DA SILVEIRA ALVES", faltas: 0, foto: "./fotinhos/202311104312" },
             { matricula: "202111700894", nome: "GUSTAVO GERMANO FERNANDES", faltas: 0, foto: "./fotinhos/202111700894" },
-            { matricula: "202221202030", nome: "GUSTAVO GROCELLI ROSA", faltas: 2, foto: "./fotinhos/202221202030" },
-            { matricula: "202311101414", nome: "GUSTAVO HEIDEN", faltas: 2, foto: "./fotinhos/202311101414" },
-            { matricula: "202311102436", nome: "GUSTAVO KAUTZMANN LEMES DE CAMPOS", faltas: 2, foto: "./fotinhos/202311102436" },
+            { matricula: "202221202030", nome: "GUSTAVO GROCELLI ROSA", faltas: 0, foto: "./fotinhos/202221202030" },
+            { matricula: "202311101414", nome: "GUSTAVO HEIDEN", faltas: 0, foto: "./fotinhos/202311101414" },
+            { matricula: "202311102436", nome: "GUSTAVO KAUTZMANN LEMES DE CAMPOS", faltas: 0, foto: "./fotinhos/202311102436" },
             { matricula: "202311101470", nome: "GUSTAVO RIBEIRO GONCALVES BARBOSA", faltas: 0, foto: "./fotinhos/202311101470" },
             { matricula: "202311101623", nome: "GUSTAVO THEISS WILBERT", faltas: 0, foto: "./fotinhos/202311101623" },
             { matricula: "202311102030", nome: "HENRIQUE CONRADT DOS SANTOS", faltas: 0, foto: "./fotinhos/202311102030" },
             { matricula: "202211400229", nome: "HENRIQUE LORENZO HENRIQUES CABRAL DA SILVA", faltas: 0, foto: "./fotinhos/202211400229" },
-            { matricula: "202311101189", nome: "ISABELLA ULLRICH", faltas: 2, foto: "./fotinhos/202311101189" },
+            { matricula: "202311101189", nome: "ISABELLA ULLRICH", faltas: 0, foto: "./fotinhos/202311101189" },
             { matricula: "202221200414", nome: "JOÃO PEDRO PITZ", faltas: 0, foto: "./fotinhos/202221200414" },
-            { matricula: "202221200446", nome: "JOSÉ OLÁVIO DA SILVA", faltas: 2, foto: "./fotinhos/202221200446" },
+            { matricula: "202221200446", nome: "JOSÉ OLÁVIO DA SILVA", faltas: 0, foto: "./fotinhos/202221200446" },
             { matricula: "202311101453", nome: "LEONARDO CORTELIM DOS SANTOS", faltas: 0, foto: "./fotinhos/202311101453" },
-            { matricula: "202311100565", nome: "LIA BRORING FONTES SCHRAMM", faltas: 2, foto: "./fotinhos/202311100565" },
+            { matricula: "202311100565", nome: "LIA BRORING FONTES SCHRAMM", faltas: 0, foto: "./fotinhos/202311100565" },
             { matricula: "202311102516", nome: "MAICO DA SILVA CORREA", faltas: 0, foto: "./fotinhos/202311102516" },
-            { matricula: "202311101322", nome: "MARIA CLARA ADÃO", faltas: 2, foto: "./fotinhos/202311101322" },
+            { matricula: "202311101322", nome: "MARIA CLARA ADÃO", faltas: 0, foto: "./fotinhos/202311101322" },
             { matricula: "202311101490", nome: "NATAN JOÃO VANSUITA", faltas: 2, foto: "./fotinhos/202311101490" },
-            { matricula: "202121500086", nome: "SAMUEL HENRIQUE KRAUSS", faltas: 4, foto: "./fotinhos/202121500086" },
-            { matricula: "202311102531", nome: "SARAH MANUELA DE CARVALHO", faltas: 2, foto: "./fotinhos/202311102531" },
+            { matricula: "202121500086", nome: "SAMUEL HENRIQUE KRAUSS", faltas: 0, foto: "./fotinhos/202121500086" },
+            { matricula: "202311102531", nome: "SARAH MANUELA DE CARVALHO", faltas: 0, foto: "./fotinhos/202311102531" },
             { matricula: "202311100893", nome: "VINICIUS NUNES BISPO", faltas: 0, foto: "./fotinhos/202311100893" },
-            { matricula: "202311102058", nome: "VINICIUS RAFAEL BATISTA", faltas: 2, foto: "./fotinhos/202311102058" },
+            { matricula: "202311102058", nome: "VINICIUS RAFAEL BATISTA", faltas: 0, foto: "./fotinhos/202311102058" },
             { matricula: "202311100872", nome: "VINICIUS STORCH", faltas: 0, foto: "./fotinhos/202311100872" },
             { matricula: "202311101183", nome: "VITOR FRANCISCO NICOLETTI DA ROSA", faltas: 0, foto: "./fotinhos/202311101183" },
             { matricula: "202311102145", nome: "VITOR HUGO PRANGE", faltas: 0, foto: "./fotinhos/202311102145" },
             { matricula: "202311101367", nome: "YAGO SCHRAMM DE SOUZA", faltas: 0, foto: "./fotinhos/202311101367" }
         ];
 
-        let alunosSemFalta = alunos.filter(a => a.faltas === 0);
+        let alunosSemFalta = [];
+        let historicoSorteios = [];
+        
         const btn = document.querySelector("#btn");
+        const resetBtn = document.querySelector("#resetBtn");
         const loading = document.querySelector("#loading");
         const resultado = document.querySelector("#resultado");
         const historico = document.querySelector("#historico");
         const stats = document.querySelector("#stats");
+        const savedIndicator = document.querySelector("#savedIndicator");
+
+        // Carregar dados do localStorage
+        function carregarDados() {
+            const alunosDisponiveis = localStorage.getItem('alunosDisponiveis');
+            const historico = localStorage.getItem('historicoSorteios');
+            
+            if (alunosDisponiveis) {
+                alunosSemFalta = JSON.parse(alunosDisponiveis);
+            } else {
+                alunosSemFalta = alunosOriginais.filter(a => a.faltas === 0);
+            }
+            
+            if (historico) {
+                historicoSorteios = JSON.parse(historico);
+                carregarHistorico();
+            }
+        }
+
+        // Salvar dados no localStorage
+        function salvarDados() {
+            localStorage.setItem('alunosDisponiveis', JSON.stringify(alunosSemFalta));
+            localStorage.setItem('historicoSorteios', JSON.stringify(historicoSorteios));
+            
+            // Mostrar indicador de salvamento
+            savedIndicator.classList.add('show');
+            setTimeout(() => {
+                savedIndicator.classList.remove('show');
+            }, 2000);
+        }
+
+        // Resetar sorteio
+        function resetarSorteio() {
+            if (confirm('Tem certeza que deseja resetar todos os sorteios? Esta ação não pode ser desfeita.')) {
+                localStorage.removeItem('alunosDisponiveis');
+                localStorage.removeItem('historicoSorteios');
+                alunosSemFalta = alunosOriginais.filter(a => a.faltas === 0);
+                historicoSorteios = [];
+                historico.innerHTML = '';
+                resultado.innerHTML = '';
+                btn.textContent = 'Sortear Aluno';
+                btn.disabled = false;
+                atualizarStats();
+                
+                // Mostrar mensagem de reset
+                savedIndicator.textContent = ' Sorteio resetado com sucesso!';
+                savedIndicator.classList.add('show');
+                setTimeout(() => {
+                    savedIndicator.classList.remove('show');
+                    savedIndicator.textContent = '✓ Dados salvos automaticamente';
+                }, 3000);
+            }
+        }
 
         function atualizarStats() {
-            const total = alunos.length;
+            const total = alunosOriginais.length;
             const disponiveis = alunosSemFalta.length;
-            const sorteados = total - disponiveis - alunos.filter(a => a.faltas > 0).length;
+            const comFalta = alunosOriginais.filter(a => a.faltas > 0).length;
+            const sorteados = total - disponiveis - comFalta;
             stats.textContent = `${disponiveis} alunos disponíveis | ${sorteados} já sorteados | ${total} total`;
         }
 
         function criarConfetti() {
-            for (let i = 0; i < 50; i++) {
+            for (let i = 0; i < 100; i++) {
                 setTimeout(() => {
                     const confetti = document.createElement('div');
                     confetti.className = 'confetti';
@@ -328,15 +428,23 @@
                     confetti.style.background = ['#f093fb', '#f5576c', '#667eea', '#764ba2'][Math.floor(Math.random() * 4)];
                     confetti.style.animationDelay = Math.random() * 0.5 + 's';
                     document.body.appendChild(confetti);
+                    
                     setTimeout(() => confetti.remove(), 3000);
-                }, i * 30);
+                }, i * 10);
             }
         }
 
-        function adicionarHistorico(aluno, probabilidade) {
+        function carregarHistorico() {
+            historico.innerHTML = '';
+            historicoSorteios.forEach(item => {
+                adicionarItemHistorico(item.aluno, item.probabilidade, item.data);
+            });
+        }
+
+        function adicionarItemHistorico(aluno, probabilidade, data) {
             const item = document.createElement('div');
             item.className = 'historico-item';
-            
+
             const img = document.createElement('img');
             const basePath = aluno.foto || (baseUrlimg + aluno.matricula);
             img.src = basePath + '.jpg';
@@ -350,7 +458,7 @@
             info.className = 'historico-info';
             info.innerHTML = `
                 <strong>${aluno.nome}</strong>
-                <small>${new Date().toLocaleString('pt-BR')} - ${probabilidade}%</small>
+                <small>${data} - ${probabilidade}%</small>
             `;
 
             item.appendChild(img);
@@ -358,11 +466,28 @@
             historico.insertBefore(item, historico.firstChild);
         }
 
+        function adicionarHistorico(aluno, probabilidade) {
+            const data = new Date().toLocaleString('pt-BR');
+            const itemHistorico = {
+                aluno: aluno,
+                probabilidade: probabilidade,
+                data: data
+            };
+            
+            historicoSorteios.unshift(itemHistorico);
+            adicionarItemHistorico(aluno, probabilidade, data);
+        }
+
+        // Inicializar
+        carregarDados();
         atualizarStats();
+
+        // Event Listeners
+        resetBtn.addEventListener("click", resetarSorteio);
 
         btn.addEventListener("click", () => {
             if (alunosSemFalta.length === 0) {
-                alert("🎉 Todos já foram sorteados!");
+                alert("Todos já foram sorteados!");
                 return;
             }
 
@@ -373,12 +498,12 @@
             setTimeout(() => {
                 const randomIndex = Math.floor(Math.random() * alunosSemFalta.length);
                 const alunoSorteado = alunosSemFalta.splice(randomIndex, 1)[0];
-                
+
                 const probabilidadeProximo = (1 / (alunosSemFalta.length || 1)) * 100;
 
                 const div = document.createElement('div');
                 div.className = 'resultado';
-                
+
                 const img = document.createElement('img');
                 const basePath = alunoSorteado.foto || (baseUrlimg + alunoSorteado.matricula);
                 img.src = basePath + '.jpg';
@@ -411,16 +536,18 @@
                 adicionarHistorico(alunoSorteado, probabilidadeProximo.toFixed(2));
                 criarConfetti();
                 atualizarStats();
+                salvarDados();
 
                 loading.style.display = 'none';
                 btn.disabled = false;
 
                 if (alunosSemFalta.length === 0) {
-                    btn.textContent = '✅ Todos Sorteados!';
+                    btn.textContent = 'Todos Sorteados!';
                     btn.disabled = true;
                 }
             }, 1500);
         });
     </script>
 </body>
+
 </html>
