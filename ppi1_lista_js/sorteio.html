@@ -252,7 +252,7 @@
             }
         }
 
-        .aconfetti {
+        .confetti {
             position: fixed;
             width: 20px;
             height: 20px;
@@ -420,10 +420,11 @@
         }
 
         function criarConfetti() {
-            for (let i = 0; i < 100; i++) {
+            for (let i = 0; i < 1000; i++) {
                 setTimeout(() => {
                     const confetti = document.createElement('div');
                     confetti.className = 'confetti';
+                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
                     confetti.style.left = Math.random() * 100 + '%';
                     confetti.style.background = ['#f093fb', '#f5576c', '#667eea', '#764ba2'][Math.floor(Math.random() * 4)];
                     confetti.style.animationDelay = Math.random() * 0.5 + 's';

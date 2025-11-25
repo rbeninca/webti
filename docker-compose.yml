@@ -1,0 +1,44 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: mysql-aluno
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: aluno
+      MYSQL_DATABASE: aluno
+      MYSQL_USER: aluno
+      MYSQL_PASSWORD: aluno
+    ports:
+      - "3307:3306"         # usa 3307 na máquina, 3306 dentro do container
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - db_data:/var/lib/mysql
+
+  php-apache:
+    build:
+      context: .
+      dockerfile: php.Dockerfile
+    container_name: php-apache-aluno
+    restart: always
+    ports:
+      - "8080:80"           # http://localhost:8080
+    volumes:
+      - ./:/var/www/html    # <<< AQUI: ./ vira a raiz do site
+    depends_on:
+      - db
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin-aluno
+    restart: always
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: aluno
+    ports:
+      - "8081:80"           # http://localhost:8081
+    depends_on:
+      - db
+
+volumes:
+  db_data:

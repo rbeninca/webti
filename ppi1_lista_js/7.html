@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7</title>
+
+    <style>
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-content: center;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+        }
+
+        input {
+            width: 200px;
+        }
+
+    </style>
+
+</head>
+<body>
+    
+    <div class="container">
+        <input type="text" placeholder="Insira um texto" id="palindrome-text">
+        <input type="button" value="Checar palindromo" id="check-palindrome">
+    </div>
+
+    <script>
+
+        const button = document.getElementById('check-palindrome')
+        button.addEventListener('click', () => {
+            const textElement = document.getElementById('palindrome-text')
+            const text = textElement.value
+            const isPalindrome = checkPalindrome(text)
+
+            if (isPalindrome) {
+                alert(`O texto ${text} é palindromo`)
+            } else {
+                alert(`O texto ${text} não é palindromo`)
+            }
+        })
+        function checkPalindrome(text) {
+            const reversedText = text.split('').reverse().join('')
+            return reversedText == text
+        }
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <label for="input">Informe seu nome</label>
+    <input type="text" name="" id="input">
+    <button id="salvar">Salvar</button>
+
+
+    <button id="recuperar">Recuperar</button>
+    <p id="nome"></p>
+</body>
+
+<script>
+    
+    let listaNomes=[];
+
+    salvar=document.getElementById("salvar");
+    salvar.addEventListener("click",()=>{
+        listaNomes.push(input.value);
+        localStorage.setItem("nome",JSON.stringify(listaNomes));    
+    })
+
+    recuperar=document.getElementById("recuperar")
+    recuperar.addEventListener("click",()=>{
+        let obj=JSON.parse( localStorage.getItem("nome"))
+        console.log(obj);
+        obj.forEach(element => {
+            nome.innerHTML+=" ," +element;    
+        });
+        
+    })
+
+    
+    
+
+</script>
+</html>

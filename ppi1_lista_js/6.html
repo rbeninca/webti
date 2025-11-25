@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .inputdata{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 10px;
+        }
+        button{
+            border-radius: 1rem;
+            background-color: rgb(150, 172, 150);
+        }
+    </style>
+</head>
+<body>
+    
+    
+
+<h1>Informe o intervalo de valores para os números primos</h1>
+    <div class="inputdata">
+        <label for="menor">Valor Mínimo</label>
+        <input id="menor" type="number" placeholder="insira o valor Mínimo">
+
+        <label for="maximo">Valor Máximo</label>
+        <input id="maximo" type="number" placeholder="insira o valor Máximo">
+        <button id="descobrirPrimos" onclick="clicar()">Descobrir primos</button>
+
+        <p id="resultado"></p>
+    </div>
+    <script>
+    function ehPrimos(n){
+
+       let count = 0;
+
+
+        if(n < 2){
+            return false
+        }else{
+        for(let i = 0; i <= n; i++){
+            if(n == i){
+                count++;
+            }else{
+             if(n % i == 0){
+                count++
+            }
+            }
+            
+        }
+    }
+   if(count == 2){
+    return true;
+   }
+return false;
+    }
+      function clicar(){
+        let min = document.getElementById("menor").value;
+      let max = document.getElementById("maximo").value;
+      if(min <= max){
+        for(let i = min; i <= max; i++){
+    if(ehPrimos(i)){
+        document.getElementById("resultado").innerText += i + "\n";
+    }
+}
+      }else{
+        alert("O valor inicial deve ser menor ou igual ao valor maximo");
+      }
+      }
+
+</script>
+</body>
+</html>

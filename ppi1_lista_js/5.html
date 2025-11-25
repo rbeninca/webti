@@ -37,22 +37,22 @@
         const historico = []
 
         function sortear() {
-            let min = parseInt(document.getElementById(("minimo").value));
-            let max = parseInt(document.getElementById(("maximo").value));
+            let min = parseInt(document.getElementById(("minimo")).value);
+            let max = parseInt(document.getElementById(("maximo")).value);
             let resultado = document.getElementById("resultado");
             let sortear = document.getElementById("sortear");
 
             let displayHistorico = document.getElementById("displayHistorico");
-
                 let numero = Math.floor(Math.random() * (max - min + 1)) + min
                 resultado.innerText = "Numero sorteado: " + numero
-                log(numero)
+                console.log(numero)
                 let jahFoiSorteado = false;
                 historico.forEach(elemento => {
                     if (elemento.numero == numero) {
                         jahFoiSorteado = true;
-                        alert("O número " + numero + " foi sorteado " + elemento.vezes);
-                        elemento.vezes++;
+                         elemento.vezes++;
+                        alert("O número " + numero + " foi sorteado " + elemento.vezes+" vezes.");
+                       
                     }
                 })
                 if (jahFoiSorteado == false) {

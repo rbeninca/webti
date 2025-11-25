@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: row;
+        }
+        div {
+            width: 100%;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .cor {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 20px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div id="cor1">
+        <div class="cor"></div>
+    </div>
+    <div id="cor2">
+        <div class="cor"></div>
+    </div>
+    <div id="cor3">
+        <div class="cor"></div>
+    </div>
+    <div id="cor4">
+        <div class="cor"></div>
+    </div>
+    <div id="cor5">
+        <div class="cor"></div>
+    </div>
+</body>
+<script>
+    function gerarCor(){
+            const r = Math.floor(Math.random()*256)
+            const g = Math.floor(Math.random()*256)
+            const b = Math.floor(Math.random()*256)
+            //return "rgb("+r+","+g+","+b+")"
+            return "#"+r.toString(16)+g.toString(16)+b.toString(16)x+b.toString(16)
+        }
+    function trocarCor () {
+        for(let i = 1; i <= 5; i++){
+            const bloco = document.getElementById("cor" + i);
+            const texto = bloco.querySelector(".cor");
+            const cor = gerarCor(   );
+            bloco.style.backgroundColor = cor;
+            texto.textContent = cor;
+        }
+    }
+    document.addEventListener("keydown", function(event) {
+        if(event.code === "Space"){
+            trocarCor();
+        }
+    });
+
+    trocarCor();
+</script>
+</html>
